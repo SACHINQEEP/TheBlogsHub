@@ -1,8 +1,8 @@
 const express = require('express')
 const morgan = require('morgan')
-const sequelize = require('sequelize')
 const db = require('./models')
-const CONFIG = require('./config/config')
+const CONFIG = require('./config/config');
+const userRouter = require("./APIs/routers/userRouter")
 
 let app = express()
 
@@ -14,6 +14,8 @@ app.use(
     }
   })
 )
+
+app.use("/v1/api/", userRouter);
 
 db.sequelize
   .authenticate()
