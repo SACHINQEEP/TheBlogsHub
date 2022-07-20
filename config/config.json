@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "bigbang@1330",
+    "password": "",
     "database": "blogsHub",
     "host": "127.0.0.1",
     "dialect": "mysql"

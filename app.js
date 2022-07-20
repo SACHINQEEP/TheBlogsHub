@@ -15,12 +15,16 @@ app.use(
   })
 )
 
-app.use("/v1/api/", userRouter);
+app.use("/v1/api", userRouter);
 
 db.sequelize
   .authenticate()
   .then(() => {
     console.log(`Connected to SQL database:${CONFIG.database}`)
+    db.sequelize.sync({
+      logging: false,
+      force: false
+    })
   })
   .catch(err => {
     console.error(
