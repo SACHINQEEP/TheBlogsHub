@@ -1,7 +1,9 @@
 const {User} = require("../../models");
 const userSignupRepoConverter = require("./UserSignupRepoConverter");
+const {JWTToken, randomOTP} = require("../../utils/utils")
 
 const SignupRepository = {
+
     findUser: async (data) => {
         let {email_id} = data
         
@@ -14,9 +16,6 @@ const SignupRepository = {
         if(user){
             throw new Error("User Already Registered")
         }
-
-        console.log("user", user);
-
         return userSignupRepoConverter.SignupDBOToDomain(user);
     }, 
 
@@ -30,12 +29,24 @@ const SignupRepository = {
             body.full_name = `${body.full_name} ${body.last_name}`
         }
 
-       let user = await User.create(body);
-    
-       user = JSON.parse(JSON.stringify(user));
-    //    console.log("createUser:", user);
+        if(body.password == body.checkPassword){
+            body.password
+        }else{
+            throw new Error("Wrong Password")
+        }
 
-        return userSignupRepoConverter.SignupDBOToDomain(user);
+       let user = await User.create(body);
+
+       user = JSON.parse(JSON.stringify(user));
+
+       let otp = user.otp;
+        otp = randomOTP()
+
+        user.otp = otp
+
+       let token = JWTToken(user.user_id);
+
+        return userSignupRepoConverter.SignupDBOToDomain(user, token);
     }
 }
 

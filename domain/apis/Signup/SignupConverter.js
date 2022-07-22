@@ -2,9 +2,9 @@ const SignupRequest = require("./SignupRequest")
 const SignupResponse = require("./SignupResponse")
 
 module.exports =  SignupConverter = {
-    requestToDTO:(first_name, last_name, email_id, password, user_type) =>{
+    requestToDTO:(body) =>{
         return new SignupRequest(
-            first_name, last_name, email_id, password, user_type
+            body.first_name, body.last_name, body.email_id, body.password, body.checkPassword, body.user_type
         )
     },
 
@@ -18,6 +18,7 @@ module.exports =  SignupConverter = {
             responseData.otp,
             responseData.status,
             responseData.signup_type,
+            responseData.token
 
         )
     }

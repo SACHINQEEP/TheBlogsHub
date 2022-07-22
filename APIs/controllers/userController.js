@@ -1,15 +1,15 @@
 const SignupConverter = require("../../domain/apis/Signup/SignupConverter")
 const FindUser = require("../../application/signup/FindUser")
 const CreateUser = require("../../application/signup/CreateUser")
-
-const {User} = require("../../models")
+const success = require("../../middleware/success")
 
 const userSignup = async function(req, res){
     try{
-        let {first_name, last_name, email_id, password, user_type} = req.body;
-        console.log(first_name)
+        if(req.body.email_id){
+            req.body.email_id = req.body.email_id.toLowerCase();
+        }
 
-        let reqDTO = SignupConverter.requestToDTO(first_name, last_name, email_id, password, user_type);
+        let reqDTO = SignupConverter.requestToDTO(req.body);
 
         let user = await FindUser(reqDTO);
 
@@ -17,16 +17,10 @@ const userSignup = async function(req, res){
 
         user = SignupConverter.toResponse(user);
 
-        res.status(200).json({
-            status: true,
-            message: "Signup Success",
-            user
-        })
+       return success(res, 200, true, "Signup successfully", user)
+
     }catch(err){
-        res.json({
-            status: false,
-            message: err.message
-        })
+       return success(res, 400, false, err.message, null)
     }
 }
 

@@ -1,7 +1,7 @@
 const SignupDomain = require("../../domain/signupDomain")
 
 const userSignupRepoConverter = {
-    SignupDBOToDomain: (data) => {
+    SignupDBOToDomain: (data, jwt ) => {
 
         if(data == null) return null
 
@@ -14,6 +14,7 @@ const userSignupRepoConverter = {
             data.otp,
             data.status,
             data.signup_type,
+            jwt
         )
     }
 }
