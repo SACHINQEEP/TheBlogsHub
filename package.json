@@ -2,9 +2,9 @@
   "name": "the-blogs-hub",
   "version": "1.0.0",
   "description": "Blogging_Hub",
-  "main": "index.js",
+  "main": "",
   "scripts": {
-    "start": "index.js",
+    "start": "node index.js",
     "local": "nodemon index.js"
   },
   "author": "Sachin",
@@ -23,5 +23,8 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
     "sequelize-cli": "^6.4.1"
+  },
+   "engines": {
+    "node": "^10"
   }
 }
