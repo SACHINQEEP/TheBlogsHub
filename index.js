@@ -4,6 +4,7 @@ const db = require('./models')
 const CONFIG = require('./config/config');
 const userRouter = require("./APIs/routers/userRouter")
 
+
 let app = express()
 
 app.use(express.json())
