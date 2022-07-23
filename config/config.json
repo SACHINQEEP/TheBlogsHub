@@ -18,7 +18,7 @@
     "password": "d08e40d412ed40994e798c63a03a6931ebad566798ca8f78333ad3954dbad59a",
     "database": "db3o9vrrd32mag",
     "host": "ec2-52-204-157-26.compute-1.amazonaws.com",
-    "dialect": "mysql",
+    "dialect": "postgres",
     "port":5432
   }
 }
