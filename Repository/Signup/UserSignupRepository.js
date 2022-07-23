@@ -36,13 +36,14 @@ const SignupRepository = {
         }
 
        let user = await User.create(body);
-
-       user = JSON.parse(JSON.stringify(user));
-
+       
        let otp = user.otp;
         otp = randomOTP()
 
         user.otp = otp
+
+       user = JSON.parse(JSON.stringify(user));
+
 
        let token = JWTToken(user.user_id);
 
