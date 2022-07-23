@@ -7,11 +7,13 @@ const userRouter = require("./APIs/routers/userRouter")
 
 const { Pool } = require('pg');
 const pool = new Pool({
-  connectionString: "postgres://nsdmblwlfovfcd:dff9d1078582262dd245813941f310801d9de518ef6a164900bd6b0af5b64302@ec2-44-206-214-233.compute-1.amazonaws.com:5432/d5chq839i5f6e5",
+  connectionString: "postgres://fbpzrigslyjxdp:2f7e7d0cbc355ed4ef73f269261cb665967563f5c72c14b1d7c79d8859a9b23f@ec2-34-247-72-29.eu-west-1.compute.amazonaws.com:5432/d3m3r5oqg5uop2",
   ssl: {
     rejectUnauthorized: false
   }
 });
+
+
 
 
 
