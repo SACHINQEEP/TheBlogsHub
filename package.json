@@ -1,11 +1,11 @@
 {
   "name": "the-blogs-hub",
   "version": "1.0.0",
-  "description": "Blogging Hub",
-  "main": "app.js",
+  "description": "Blogging_Hub",
+  "main": "index.js",
   "scripts": {
-    "start": "app.js",
-    "local": "nodemon app.js"
+    "start": "index.js",
+    "local": "nodemon index.js"
   },
   "author": "Sachin",
   "license": "ISC",
