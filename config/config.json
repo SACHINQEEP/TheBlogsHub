@@ -17,7 +17,7 @@
     "username": "fbpzrigslyjxdp",
     "password": "2f7e7d0cbc355ed4ef73f269261cb665967563f5c72c14b1d7c79d8859a9b23f",
     "database": "d3m3r5oqg5uop2",
-    "host": "0.0.0.0/0",
+    "host": "ec2-34-247-72-29.eu-west-1.compute.amazonaws.com",
     "dialect": "postgres",
     "port":5432
   }
