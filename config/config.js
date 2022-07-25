@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config()
 
 const CONFIG = {}
 
-CONFIG.port = process.env.PORT || 15869
+// CONFIG.port = process.env.PORT || 15869
 
 CONFIG.database = process.env.DATABASE || "blogsHub"
 
