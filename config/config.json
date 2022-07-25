@@ -1,5 +1,5 @@
 {
-  "development": {
+  "production": {
     "username": "root",
     "password": "",
     "database": "blogsHub",
@@ -13,12 +13,13 @@
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "production": {
+  "development": {
     "username": "hvteoajhcxcsqi",
     "password": "c59fdbe5c1bb8decd20a8ba2849051ce41724cacfebe8a8df57473979ab131e0",
     "database": "d4fe7h6apjcf5s",
     "host": "ec2-3-248-121-12.eu-west-1.compute.amazonaws.com",
-    "dialect": "postgres",
-    "port":5432
+    "dialect": "postgres"
   }
 }
+
+
