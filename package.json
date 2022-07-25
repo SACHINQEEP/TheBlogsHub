@@ -26,5 +26,8 @@
   },
   "engines": {
     "node": "^10"
+  },
+  "devDependencies": {
+    "@architect/sandbox": "^5.3.1"
   }
 }
