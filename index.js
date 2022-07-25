@@ -17,6 +17,13 @@ app.use(
 )
 
 app.use("/v1/api", userRouter);
+app.get("/", (req, res)=> {
+  console.log("hello there")
+  res.status(200).json({
+    status: true,
+    message: "connected"
+  })
+})
 
 
 db.sequelize
