@@ -9,21 +9,14 @@ let app = express()
 
 app.use(express.json())
 app.use(
-  morgan('dev', {
+  morgan("dev", {
     skip: function (req, res) {
-      return res.statusCode < 400
+      return res.status < 400
     }
   })
 )
 
 app.use("/v1/api", userRouter);
-app.get("/", (req, res)=> {
-  console.log("hello there")
-  res.status(200).json({
-    status: true,
-    message: "connected"
-  })
-})
 
 
 db.sequelize
