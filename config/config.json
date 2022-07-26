@@ -15,7 +15,7 @@
   },
   "production": {
     "username": "sql6508715",
-    "password": "fg2jbe1jlA",
+    "password": "fg2jbe1jIA",
     "database": "sql6508715",
     "host": "sql6.freesqldatabase.com",
     "dialect": "mysql"
