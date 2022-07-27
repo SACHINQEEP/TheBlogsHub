@@ -24,7 +24,7 @@ async function verifyPassword(password, bodyPassword){
 
 // For EandomOTP
 function randomOTP(){
-    let otp = Math.floor(Math.random() * 9999);
+    let otp = Math.floor(9000 + Math.random() * 9999);
 
     return otp
 }

@@ -4,6 +4,10 @@ const CreateUser = require("../../application/signup/CreateUser")
 const success = require("../../middleware/success")
 const SigninConverter = require("../../domain/apis/Signin/SigninConverter")
 const getUser = require("../../application/Signin/FindUser")
+const ForgotPasswordRequest = require("../../domain/apis/forgotPassword/forgotPasswordRequest")
+const forgotPasswordConverter = require("../../domain/apis/forgotPassword/forgotPasswordConverter")
+const findUser = require("../../application/ForgotPassword/FindUser")
+const { updateUser } = require("../../Repository/ForgotPassword/ForgotPasswordRepository")
 
 const userSignup = async function(req, res){
     try{
@@ -40,7 +44,26 @@ const userSignin = async function(req, res){
     }
 }
 
+const forgotPassword = async function(req, res){
+    try{
+        let reqDTO = forgotPasswordConverter.requestToDTO(req.body);
+
+        let find = await findUser(reqDTO);
+
+       let update = await updateUser(find);
+
+       let user = forgotPasswordConverter.toResponse(update);
+
+       let response = user.message;
+
+        return success(res, 200, true, "Success", response);
+    }catch(err){
+        return success(res, 400, false, err.message)
+    }
+}
+
 module.exports = {
     userSignup,
-    userSignin
+    userSignin,
+    forgotPassword
 }

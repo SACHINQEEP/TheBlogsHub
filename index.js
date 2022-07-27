@@ -8,13 +8,13 @@ const userRouter = require("./APIs/routers/userRouter")
 let app = express()
 
 app.use(express.json())
-app.use(
-  morgan("dev", {
-    skip: function (req, res) {
-      return res.status < 400
-    }
-  })
-)
+app.use(morgan("dev"))
+
+// {
+//   skip: function (req, res) {
+//     return res.status < 400
+//   }
+// }
 
 app.use("/v1/api", userRouter);
 
@@ -22,7 +22,7 @@ app.use("/v1/api", userRouter);
 db.sequelize
   .authenticate()
   .then(() => {
-    console.log(`Connected to SQL database:${CONFIG.database}`)
+    console.log(`Connected to SQL database:${CONFIG.database}✅`)
     db.sequelize.sync({
       logging: false,
       force: false
@@ -30,7 +30,7 @@ db.sequelize
   })
   .catch(err => {
     console.error(
-      `Unable to connect to SQL database:${CONFIG.database}`,
+      `Unable to connect to SQL database:${CONFIG.database}❎`,
       err.message
     )
   })
