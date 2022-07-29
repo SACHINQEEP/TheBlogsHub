@@ -2,6 +2,7 @@ const { User } = require("../../models");
 const userSignupRepoConverter = require("./UserSignupRepoConverter");
 const { JWTToken, randomOTP, hashPassword } = require("../../utils/utils");
 const { Op } = require("sequelize");
+const sendEmail  = require("../../services/emailService");
 
 const SignupRepository = {
   findUser: async (data) => {
@@ -41,6 +42,17 @@ const SignupRepository = {
     otp = randomOTP();
 
     user.otp = otp;
+
+    await User.update({otp: otp},{
+      where:{
+        user_id: user.user_id
+      }
+    })
+
+    let message = `<h1>Your verification OTP is: ${otp}</h1>`;
+    let subject = "Email verification"
+
+   await sendEmail(user.email_id, subject, message);
 
     user = JSON.parse(JSON.stringify(user));
 

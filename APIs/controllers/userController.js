@@ -11,6 +11,10 @@ const { updateUser } = require("../../Repository/ForgotPassword/ForgotPasswordRe
 const changePasswordConverter = require("../../domain/apis/changePassword/changePasswordConverter")
 const FindUserForChangePassword = require("../../application/ChangePassword/FIndUser")
 const UpdateUserChangePassword = require("../../application/ChangePassword/UpdateUser")
+const verifyEmailConverter = require("../../domain/apis/verifyUserEmail/verifyEmailConverter")
+const FindUserForVerify = require("../../application/VerifyUserEmail/FindUserForVerify")
+const { updateVerifyUser } = require("../../Repository/verifyUserEmail/VerifyEmailRepository")
+const UpdateUserForVerify = require("../../application/VerifyUserEmail/UpdateUserForVerify")
 
 const userSignup = async function(req, res){
     try{
@@ -86,9 +90,28 @@ const changePassword = async function(req, res){
     }
 }
 
+const verifyUserEmail = async (req, res)=> {
+    try{
+        let reqDTO = verifyEmailConverter.RequestToDTO(req.body);
+
+        let checkUser = await FindUserForVerify(reqDTO);
+
+        let updateUser = await UpdateUserForVerify(checkUser);
+
+        let response = verifyEmailConverter.toResponse(updateUser);
+
+        response = response.message;
+
+        return success(res, 200, true, "success", response)
+    }catch(err){
+        return success(res, 400, false, err.message)
+    }
+}
+
 module.exports = {
     userSignup,
     userSignin,
     forgotPassword,
-    changePassword
+    changePassword,
+    verifyUserEmail
 }
