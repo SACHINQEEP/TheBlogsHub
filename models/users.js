@@ -32,12 +32,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         user_type:{
             type: DataTypes.INTEGER,
-            Comment: "1=>admin, 2=>writer, 3=>reader"
+            comment: "1=>admin, 2=>writer, 3=>reader"
         },
         email_verify:{
             type: DataTypes.INTEGER,
             defaultValue: 2,
-            Comment: "1=>yes 2=>no"
+            comment: "1=>yes 2=>no"
         },
         otp:{
             type:DataTypes.STRING,
@@ -46,12 +46,12 @@ module.exports = (sequelize, DataTypes) => {
         status:{
             type: DataTypes.INTEGER,
             defaultValue:1,
-            Comment: "1=>active, 2=>inactive, 3=>blocked"
+            comment: "1=>active, 2=>inactive, 3=>blocked"
         },
         signup_type:{
             type: DataTypes.INTEGER,
             defaultValue : 3,
-            Comment: "1=>email & pass, 2=>mobile, 3=>guest"
+            comment: "1=>email & pass, 2=>mobile, 3=>guest"
         }
     }, {
         paranoid: true,
@@ -59,5 +59,16 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: true,
         tableName: "users"
     }) 
+
+    User.associate = (models)=> {
+        User.hasMany(models.Blogs, {
+            sourceKey: "user_id",
+            foreignKey: {
+                name: "user_id"
+            },
+            as: "Blogs",
+            constraints: false
+        })
+    }
     return User
 }
