@@ -20,6 +20,17 @@ const SignupRepository = {
     }
     return userSignupRepoConverter.SignupDBOToDomain(user);
   },
+  findUserForAuth: async (data) => {
+
+    let user = await User.findOne({
+      where: {
+        // [Op.any]: [{email_id: data.email_id}, {user_id:data.user_id}],
+        user_id: data
+      },
+    });
+
+    return user;
+  },
 
   createUser: async (body) => {
     if (body.first_name) {

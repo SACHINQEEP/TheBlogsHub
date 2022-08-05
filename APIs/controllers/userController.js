@@ -15,6 +15,9 @@ const verifyEmailConverter = require("../../domain/apis/verifyUserEmail/verifyEm
 const FindUserForVerify = require("../../application/VerifyUserEmail/FindUserForVerify")
 const { updateVerifyUser } = require("../../Repository/verifyUserEmail/VerifyEmailRepository")
 const UpdateUserForVerify = require("../../application/VerifyUserEmail/UpdateUserForVerify")
+const AddBlogsConverter = require("../../domain/apis/Blogs/AddBlogsConverter")
+const FindBlogUser = require("../../application/Blogs/FindBlogUser")
+const { createBlog } = require("../../Repository/Blogs/AddBlogsRepository")
 
 const userSignup = async function(req, res){
     try{
@@ -108,10 +111,40 @@ const verifyUserEmail = async (req, res)=> {
     }
 }
 
+const AddBlogs = async(req, res)=> {
+    try{
+
+        let {title, discription, catagory_id} = req.body
+
+        let user = JSON.parse(JSON.stringify(req.next));
+        // let {user_id}= res.user;
+        let {user_id} = user;
+
+        let object = {
+            title, discription, catagory_id, user_id
+        }
+
+        let reqDTO = AddBlogsConverter.requestTODTO(object);
+
+        console.log(reqDTO)
+
+         await FindBlogUser(reqDTO);
+
+        let createUser = await createBlog(reqDTO);
+
+        let response = AddBlogsConverter.toResponse(createUser);
+
+        return success(res, 200, true, "Blog Created", response)
+    }catch(err){
+        return success(res,400, false, err.message )
+    }
+}
+
 module.exports = {
     userSignup,
     userSignin,
     forgotPassword,
     changePassword,
-    verifyUserEmail
+    verifyUserEmail,
+    AddBlogs
 }

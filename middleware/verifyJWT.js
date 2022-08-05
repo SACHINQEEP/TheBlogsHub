@@ -1,34 +1,35 @@
-import CONFIG from "../config/config";
+
+const CONFIG = require("../config/config")
 
 const jwt = require("jsonwebtoken");
-const { findUser } = require("../Repository/Signup/UserSignupRepository");
+const { findUserForAuth } = require("../Repository/Signup/UserSignupRepository");
 const success = require("./success");
 
-export const checkJwt = async function (req, res, next) {
+const checkJwt = async function (req, res, next) {
   const token = req.headers.authorization?.split(" ")[1];
-  console.log(token);
 
   let jwtPayload;
 
   try {
     jwtPayload = jwt.verify(token, CONFIG.Secrat_key);
+    console.log(jwtPayload);
 
-    res.locals.jwtPayload = jwtPayload;
+    // res.locals.jwtPayload = jwtPayload;
 
-    let user_id = jwtPayload.id.id;
-    const user = findUser(user_id);
+    let user_id = jwtPayload.id;
 
-    res.locals.user = user;
+    const user =await findUserForAuth(user_id);
+
+    req.next = user;
+
+    // console.log(req.next);
+    next(null, req.next);
+
   } catch (err) {
     return success(res, 401, false, err.message, null);
   }
-
-  const { id, user_id } = jwtPayload;
-  const newToken = jwt.sign({ id, user_id }, CONFIG.Secrat_key, {
-    expiresIn: "1h",
-  });
-
-  res.setHeader("token", newToken);
-
-  next()
+ 
 };
+
+
+module.exports = checkJwt
