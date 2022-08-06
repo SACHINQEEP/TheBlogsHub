@@ -2,23 +2,26 @@ const BlogsListDomain = require("../../domain/BlogsListDomain")
 
 const BlogsListRepoConverter = {
     BlogsListDBOToDomain: (data)=> {
-        console.log(data);
+        // console.log(data);
+        let {count , list} = data;
         
-        if(data == null) return null;
+        if(count == 0) throw new Error("list not found");
 
         let datas =[];
 
-        data.forEach(el => {
+        list.forEach(el => {
             datas.push(
                 new BlogsListDomain(
                     el.blog_id,
+                    el.name,
                     el.title,
                     el.discription,
-                    el.createAt,
+                    el.createdAt,
+                    el.readTime
                 )
             )
         })
-        return datas
+        return {count, datas}
     }
 }
 

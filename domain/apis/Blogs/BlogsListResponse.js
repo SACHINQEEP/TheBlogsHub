@@ -1,9 +1,11 @@
 
 module.exports = class BlogsListResponse{
-    constructor(blog_id, title, discription, full_name){
+    constructor(blog_id, name,  title, discription, createdAt, readTime){
         this.blog_id = blog_id
+        this.name = name
         this.title = title
         this.discription = discription
-        this.full_name = full_name
+        this.createdAt = createdAt
+        this.readTime = readTime
     }
 }

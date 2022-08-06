@@ -10,20 +10,23 @@ module.exports = BlogsListConverter ={
     },
 
     toResponse: (body)=> {
+        let {count, datas} = body;
 
         let BlogsList = [];
 
-        body.forEach(el => {
+        datas.forEach(el => {
             BlogsList.push(
                 new BlogsListResponse(
                     el.blog_id,
+                    el.name,
                     el.title,
                     el.discription,
-                    el.createAt,
+                    el.createdAt,
+                    el.readTime
                 )
             )
         })
 
-        return BlogsList
+        return {count, BlogsList}
     }
 }

@@ -12,9 +12,6 @@ const checkJwt = async function (req, res, next) {
 
   try {
     jwtPayload = jwt.verify(token, CONFIG.Secrat_key);
-    console.log(jwtPayload);
-
-    // res.locals.jwtPayload = jwtPayload;
 
     let user_id = jwtPayload.id;
 
@@ -22,11 +19,10 @@ const checkJwt = async function (req, res, next) {
 
     req.next = user;
 
-    // console.log(req.next);
     next(null, req.next);
 
   } catch (err) {
-    return success(res, 401, false, err.message, null);
+    return success(res, 401, false, err.message, "unauthorized access");
   }
  
 };

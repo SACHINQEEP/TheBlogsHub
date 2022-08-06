@@ -1,48 +1,59 @@
-const {User, Blogs} =require("../../models");
+const moment = require("moment");
+const { User, Blogs } = require("../../models");
 const BlogsListRepoConverter = require("./BlogsListRepoConverter");
 
-
-
 const BlogsListRepository = {
-    blogsList: async (data)=> {
-        let {limit, offset} = data;
+  blogsList: async (data) => {
+    let { limit, offset } = data;
 
-        limit = limit ? limit :10;
-        offset = offset ? offset : 0;
+    limit = limit ? limit : 10;
+    offset = offset ? offset : 0;
 
-        let list = await Blogs.findAll({
-            where:{
-                status: 1
-            },
-            limit,
-            offset,
-            include:[{
-                model: User,
-                as: "users",
-                where: { status: 1 },
-                required: false
-            }]
-        });
+    let { rows, count } = await User.findAndCountAll({
+      where: {
+        status: 1,
+      },
+      attributes: ["full_name"],
+      include: [
+        {
+          model: Blogs,
+          as: "Blogs",
+          where: { status: 1 },
+          attributes: ["blog_id", "title", "discription", "createdAt"],
+          required: false,
+        },
+      ],
+    });
 
-        list = JSON.parse(JSON.stringify(list));
-        console.log(list);
+    rows = JSON.parse(JSON.stringify(rows));
 
-        // for(let i=1; i<rows.length; i++){
-        //     let el = rows[i];
-        //     el["name"] =  el.users.full_name;
-        //     delete el.users
-        // }
+    let list = [];
 
+    for(let i=0; i<rows.length; i++){
+        let el = rows[i];
+        for(let j=0; j<el.Blogs.length; j++){
+            let el2 = el.Blogs[j];
+            el2["name"] = el.full_name;
 
-        list.forEach(el => {
-             el["name"] = el.users.full_name;
-            delete el.users;
-        })
+            let WPM = 225;
+            let words = el2.discription;
+            let totalWords = words.length;
+            let readingTime = totalWords / WPM
+            el2["readTime"] = readingTime.toFixed(2);
 
-        console.log("blogList" ,rows)
-
-        // return BlogsListRepoConverter.BlogsListDBOToDomain(blogLists);
+            el2.createdAt =moment(el2.createdAt).format("DD-MM-YYYY, hh:mm");
+            list.push(el2)
+        }
     }
-}
 
-module.exports = BlogsListRepository
+    list = list.slice(offset, limit + offset);
+
+    let BlogList = {
+        count, list
+    }
+
+    return BlogsListRepoConverter.BlogsListDBOToDomain(BlogList);
+  },
+};
+
+module.exports = BlogsListRepository;
