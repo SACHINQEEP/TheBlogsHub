@@ -2,7 +2,7 @@
 const success = function(res, status, statusCode, message, response){
 
     let send = {
-        statusCode, 
+        status, 
         message,
         response
     }

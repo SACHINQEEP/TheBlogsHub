@@ -18,6 +18,8 @@ const UpdateUserForVerify = require("../../application/VerifyUserEmail/UpdateUse
 const AddBlogsConverter = require("../../domain/apis/Blogs/AddBlogsConverter")
 const FindBlogUser = require("../../application/Blogs/FindBlogUser")
 const { createBlog } = require("../../Repository/Blogs/AddBlogsRepository")
+const BlogsListConverter = require("../../domain/apis/Blogs/BlogsListConverter")
+const FindBlogList = require("../../application/Blogs/FindBlogLIst")
 
 const userSignup = async function(req, res){
     try{
@@ -126,8 +128,6 @@ const AddBlogs = async(req, res)=> {
 
         let reqDTO = AddBlogsConverter.requestTODTO(object);
 
-        console.log(reqDTO)
-
          await FindBlogUser(reqDTO);
 
         let createUser = await createBlog(reqDTO);
@@ -140,11 +140,31 @@ const AddBlogs = async(req, res)=> {
     }
 }
 
+const BlogsList = async (req, res)=> {
+    try{
+        let user = JSON.parse(JSON.stringify(req.next));
+
+        let reqDTO = BlogsListConverter.requestToDTO(user);
+
+        await FindBlogUser(reqDTO);
+
+        let list = await FindBlogList(req.body);
+
+        let response = BlogsListConverter.toResponse(list);
+
+        return success(res, 200, true, "Blog List", response)
+
+    }catch(err){
+        return success(res, 400, false, err.message)
+    }
+}
+
 module.exports = {
     userSignup,
     userSignin,
     forgotPassword,
     changePassword,
     verifyUserEmail,
-    AddBlogs
+    AddBlogs,
+    BlogsList
 }
