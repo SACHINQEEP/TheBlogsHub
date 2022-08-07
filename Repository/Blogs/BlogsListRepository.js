@@ -1,6 +1,7 @@
 const moment = require("moment");
 const { User, Blogs } = require("../../models");
 const BlogsListRepoConverter = require("./BlogsListRepoConverter");
+const {readingTime}= require("../../utils/utils")
 
 const BlogsListRepository = {
   blogsList: async (data) => {
@@ -34,12 +35,7 @@ const BlogsListRepository = {
         for(let j=0; j<el.Blogs.length; j++){
             let el2 = el.Blogs[j];
             el2["name"] = el.full_name;
-
-            let WPM = 225;
-            let words = el2.discription;
-            let totalWords = words.length;
-            let readingTime = totalWords / WPM
-            el2["readTime"] = readingTime.toFixed(2);
+            el2["readTime"] = readingTime(el2.discription)
 
             el2.createdAt =moment(el2.createdAt).format("DD-MM-YYYY, hh:mm");
             list.push(el2)

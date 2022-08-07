@@ -29,6 +29,13 @@ function randomOTP(){
     return otp
 }
 
+function readingTime(totalWords){
+    let WPM = 225;
+    let words = totalWords.length;
+    let readingTime = words/WPM;
+    return (readingTime).toFixed(2)
+}
+
 module.exports = {
-    JWTToken, randomOTP, hashPassword, verifyPassword
+    JWTToken, randomOTP, hashPassword, verifyPassword, readingTime
 }

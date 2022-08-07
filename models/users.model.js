@@ -67,6 +67,13 @@ module.exports = (sequelize, DataTypes) => {
             as: "Blogs",
             constraints: false
         })
+
+        User.hasMany(models.UserFollowing, {
+            sourceKey: "user_id",
+            foreignKey: "user_id",
+            as: "UserFollowing",
+            constraints: false
+        })
     }
     return User
 }
