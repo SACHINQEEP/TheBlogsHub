@@ -5,7 +5,7 @@ const argon = require("argon2");
 // signup login token
 function JWTToken(id){
     const token = jwt.sign({id}, CONFIG.Secrat_key, {
-        expiresIn: "1h"
+        expiresIn: "24h"
     })
 
     return token

@@ -17,7 +17,7 @@ const SinginRepository = {
             }
         });
 
-        if(!user) throw new Error("Unser not Found");
+        if(!user) throw new Error("User not Found");
 
         if(user.status == 3){
             throw new Error("You have been blocked by admin")
