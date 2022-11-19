@@ -3,14 +3,14 @@ require("dotenv").config();
 const morgan = require('morgan')
 const db = require('./models')
 const CONFIG = require('./config/config');
-const userRouter = require("./APIs/routers/userRouter")
+const userRouter = require("./src/APIs/routers/user.router")
 const cors = require("cors");
 
 let app = express()
 
 app.use(express.json())
 app.use(morgan("dev", {
-  skip: function(req, res){
+  skip: function (req, res) {
     return res.status <= 400
   }
 }))

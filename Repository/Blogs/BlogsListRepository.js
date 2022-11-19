@@ -1,7 +1,7 @@
 const moment = require("moment");
-const { User, Blogs } = require("../../models");
+const { User, Blogs } = require("../../src/models");
 const BlogsListRepoConverter = require("./BlogsListRepoConverter");
-const {readingTime}= require("../../utils/utils")
+const { readingTime } = require("../../utils/utils")
 
 const BlogsListRepository = {
   blogsList: async (data) => {
@@ -30,22 +30,22 @@ const BlogsListRepository = {
 
     let list = [];
 
-    for(let i=0; i<rows.length; i++){
-        let el = rows[i];
-        for(let j=0; j<el.Blogs.length; j++){
-            let el2 = el.Blogs[j];
-            el2["name"] = el.full_name;
-            el2["readTime"] = readingTime(el2.discription)
+    for (let i = 0; i < rows.length; i++) {
+      let el = rows[i];
+      for (let j = 0; j < el.Blogs.length; j++) {
+        let el2 = el.Blogs[j];
+        el2["name"] = el.full_name;
+        el2["readTime"] = readingTime(el2.discription)
 
-            el2.createdAt =moment(el2.createdAt).format("DD-MM-YYYY, hh:mm");
-            list.push(el2)
-        }
+        el2.createdAt = moment(el2.createdAt).format("DD-MM-YYYY, hh:mm");
+        list.push(el2)
+      }
     }
 
     list = list.slice(offset, limit + offset);
 
     let BlogList = {
-        count, list
+      count, list
     }
 
     return BlogsListRepoConverter.BlogsListDBOToDomain(BlogList);

@@ -1,25 +1,31 @@
 {
   "development": {
-    "username": "root",
-    "password": "",
-    "database": "blogsHub",
-    "host": "0.0.0.0",
-    "dialect": "mysql"
+    "database": {
+      "url": "mongodb://localhost/mongoose_dev",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "database": {
+      "url": "mongodb://localhost/mongoose_test",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
   },
   "production": {
-    "username": "D6b6nMpdhw",
-    "password": "NR6vid7VlV",
-    "database": "D6b6nMpdhw",
-    "host": "remotemysql.com",
-    "dialect": "mysql"
+    "database": {
+      "protocol": "mongodb",
+      "username": "root",
+      "password": "password",
+      "name": "database_production",
+      "host": "localhost",
+      "port": "",
+      "options": {
+        "useNewUrlParser": true
+      }
+    }
   }
 }
-
-

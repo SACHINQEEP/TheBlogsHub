@@ -1,37 +1,37 @@
-'use strict';
-
 const fs = require('fs');
 const path = require('path');
-const Sequelize = require('sequelize');
+const Mongoose = require('mongoose');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'production';
+const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+if (config.database.url) {
+  Mongoose.connect(config.database.url, config.database.options);
+} else if (config.database.config.dbName) {
+  Mongoose.connect(`${config.database.protocol}://${config.database.username}:${config.database.password}@${config.database.host}:${config.database.port}`, config.database.options);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  Mongoose.connect(`${config.database.protocol}://${config.database.username}:${config.database.password}@${config.database.host}:${config.database.port}/${config.database.name}`, config.database.options);
 }
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+const db = () => {
+  const m = {};
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+  fs
+    .readdirSync(__dirname)
+    .filter(file => {
+      return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    })
+    .forEach(file => {
+      const model = require(path.resolve(__dirname, file))(Mongoose);
+      m[model.modelName] = model;
+    });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+  return m;
+}
 
-module.exports = db;
+
+const models = db();
+const mongoose = Mongoose;
+
+module.exports = mongoose;
+module.exports.default = models;
