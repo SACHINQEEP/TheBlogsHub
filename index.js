@@ -1,10 +1,9 @@
 const express = require('express')
 require("dotenv").config();
 const morgan = require('morgan')
-const db = require('./models')
-const CONFIG = require('./config/config');
 const userRouter = require("./src/APIs/routers/user.router")
 const cors = require("cors");
+const db = require("./models/index");
 
 let app = express()
 
@@ -19,25 +18,11 @@ app.use(cors());
 
 app.use("/v1/api", userRouter);
 
+let connect = db.connection;
+connect.on("error", console.error.bind(console, "could not connect with database"));
 
-db.sequelize
-  .authenticate()
-  .then(() => {
-    console.log(`Connected to SQL database:${CONFIG.database}✅`)
-    db.sequelize.sync({
-      logging: false,
-      force: false
-    })
-  })
-  .catch(err => {
-    console.error(
-      `Unable to connect to SQL database:${CONFIG.database}❎`,
-      err.message
-    )
-  })
-
-let port = process.env.PORT || 8000
+let port = process.env.PORT || 8000;
 
 app.listen(port, () => {
-  console.log(`Server Listed on ${port}`)
+  console.log(`🚀 Server Listed on ${port} 🚀`)
 })

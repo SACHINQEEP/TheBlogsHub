@@ -5,7 +5,7 @@ const MasterContentSchema = new mongoose.Schema({
         type: String,
     },
     content: {
-        type: Sting,
+        type: String,
     },
     status: { // 1=>Active, 2=>InActive, 3=>Deleted
         type: Number,

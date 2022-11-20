@@ -26,7 +26,7 @@ module.exports = {
         try {
             let message = await _service.forgotPassword(req.body)
 
-            return success(res, 200, true, "Success", message);
+            return success(res, 200, true, message);
         } catch (err) {
             return success(res, 400, false, err.message)
         }
@@ -38,7 +38,7 @@ module.exports = {
 
             let message = await _service.changePassword(req.body);
 
-            return success(res, 200, true, "Success", message)
+            return success(res, 200, true, message)
 
         } catch (err) {
             return success(res, 400, false, err.message)
@@ -49,7 +49,7 @@ module.exports = {
         try {
             let message = await _service.verifyUser(req.body);
 
-            return success(res, 200, true, "success", message)
+            return success(res, 200, true, message)
         } catch (err) {
             return success(res, 400, false, err.message)
         }

@@ -1,6 +1,3 @@
-
-const CONFIG = require("../../config/config")
-
 const jwt = require("jsonwebtoken");
 const { findUserForAuth } = require("../../Repository/Signup/UserSignupRepository");
 const success = require("./success");
@@ -11,7 +8,7 @@ const checkJwt = async function (req, res, next) {
   let jwtPayload;
 
   try {
-    jwtPayload = jwt.verify(token, CONFIG.Secrat_key);
+    jwtPayload = jwt.verify(token, process.env.Secrat_key);
 
     let user_id = jwtPayload.id;
 

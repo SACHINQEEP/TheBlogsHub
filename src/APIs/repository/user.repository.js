@@ -21,5 +21,13 @@ module.exports = {
         } catch (err) {
             throw new Error(err.message)
         }
+    },
+
+    updateUser: async (id, body) => {
+        try {
+            return await User.findOneAndUpdate(id, body)
+        } catch (err) {
+            throw new Error(err.message)
+        }
     }
 }

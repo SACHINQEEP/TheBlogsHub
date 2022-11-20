@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken")
-const CONFIG = require("../config/config")
 const argon = require("argon2");
 
 // signup login token
 async function JWTToken(id) {
-    const token = jwt.sign({ id }, CONFIG.Secrat_key, {
+    const token = jwt.sign({ id }, process.env.Secrat_key, {
         expiresIn: "24h"
     })
 
@@ -19,6 +18,7 @@ async function hashPassword(password) {
 
 // to verify hash password with plane passoword
 async function verifyPassword(password, bodyPassword) {
+    console.log(password)
     return await argon.verify(password, bodyPassword)
 }
 
