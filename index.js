@@ -1,7 +1,8 @@
 const express = require('express')
 require("dotenv").config();
 const morgan = require('morgan')
-const userRouter = require("./src/APIs/routers/user.router")
+const userRouter = require("./src/APIs/routers/user.router");
+const blogsRouter = require("./src/APIs/routers/blogs.router");
 const cors = require("cors");
 const db = require("./models/index");
 
@@ -17,6 +18,7 @@ app.use(cors());
 
 
 app.use("/v1/api", userRouter);
+app.use("/v1/api", blogsRouter);
 
 let connect = db.connection;
 connect.on("error", console.error.bind(console, "could not connect with database"));

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { findUserForAuth } = require("../../Repository/Signup/UserSignupRepository");
+const _repos = require("../APIs/repository/repository");
 const success = require("./success");
 
 const checkJwt = async function (req, res, next) {
@@ -10,19 +10,23 @@ const checkJwt = async function (req, res, next) {
   try {
     jwtPayload = jwt.verify(token, process.env.Secrat_key);
 
-    let user_id = jwtPayload.id;
+    let _id = jwtPayload.id;
 
-    const user = await findUserForAuth(user_id);
+    let user = await _repos.findUser({ _id });
 
-    req.next = user;
+    user = JSON.parse(JSON.stringify(user));
 
-    next(null, req.next);
+    req.user = user;
+    res.locals.user = user;
+    next()
 
   } catch (err) {
     return success(res, 401, false, err.message, "unauthorized access");
   }
 
 };
+
+// require("crypto").randomBytes(35).toString("hex")
 
 
 module.exports = checkJwt

@@ -32,7 +32,6 @@ module.exports = {
         }
     },
 
-
     changePassword: async function (req, res) {
         try {
 

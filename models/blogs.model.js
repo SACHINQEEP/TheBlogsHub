@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const User = require("./user.model");
 
 const blogSchema = new mongoose.Schema({
+    user_id: {
+        type: mongoose.ObjectId, ref: User
+    },
     title: {
         type: String,
         required: [true, "blog title is required!!"]
