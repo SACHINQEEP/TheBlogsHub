@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 3,
         required: [true, "signup_type is required!!"]
+    },
+    blogs_type: {
+        type: Number,
+        default: null,
     }
 }, {
     timestamps: true

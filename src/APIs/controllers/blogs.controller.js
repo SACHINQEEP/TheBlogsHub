@@ -14,6 +14,9 @@ module.exports = {
 
     blogsList: async (req, res) => {
         try {
+            let blogs = await _service.blogList(req.user, req.body);
+
+            return success(res, 200, true, blogs);
 
         } catch (err) {
             return success(res, 400, false, err.message)
