@@ -1,0 +1,35 @@
+Project TheBlogsHub {
+  database_type: 'Mongodb'
+  Note: '''
+    # TheBlogsHUb Database
+    **markdown content here**
+  '''
+}
+
+Table users as U {
+  id int [pk, increment]
+  first_name  varchar [not null]
+  last_name varchar [not null]
+  email_id varchar [not null]
+  password varchar [not null]
+  user_type int [default: 1]
+  email_verify int 
+  otp varchar
+  status int [default: 1]
+  signup_type int [default: 1]
+  blogs_type int 
+  created_at timestamp
+  note: "table 'users' contains user information"
+}
+
+Table Blogs as B {
+    id int [pk, increment]
+    user_id int [ref: > U.id, not null]
+    title varchar [not null]
+    blog_discription varchar [not null]
+    approved varchar
+    blog_status int [default: 1]
+    status int [default: 1]
+    created_at timestamp
+}
+

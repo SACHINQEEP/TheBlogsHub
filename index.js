@@ -4,7 +4,14 @@ const morgan = require('morgan')
 const userRouter = require("./src/APIs/routers/user.router");
 const blogsRouter = require("./src/APIs/routers/blogs.router");
 const cors = require("cors");
-const db = require("./models/index");
+const Mongoose = require('mongoose');
+
+// To get database details from config file
+const env = process.env.NODE_ENV || 'development';
+const config = require(__dirname + '/config/config.json')[env];
+
+
+console.log("env", env)
 
 let app = express()
 
@@ -20,8 +27,13 @@ app.use(cors());
 app.use("/v1/api", userRouter);
 app.use("/v1/api", blogsRouter);
 
-let connect = db.connection;
-connect.on("error", console.error.bind(console, "could not connect with database"));
+// To Connect database we use config file which contain different configration 
+Mongoose.connect(config.database.url + process.env.DATABASE, config.database.options)
+  .then(() => {
+    console.log(`Connected with Database ${process.env.DATABASE}✅`)
+  }).catch((err) => {
+    console.log(`⛔connection error ${err}`)
+  })
 
 let port = process.env.PORT || 8000;
 
